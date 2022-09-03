@@ -1,8 +1,8 @@
 # Microsoft FPGA Board
 Microsoft Catapult FPGA, PCIE Test Demo, On-board usb Blaster and OpenCL BSP 
 
-- [x] Catapult V3, Longs Peark
-- [ ] Catapult V2, Storey Peark
+- [x] Catapult V3, Longs Peak
+- [ ] Catapult V2, Storey Peak
 
 ## Milestone
 - [x] PCIE On Chip Memory and DDR4 Test Ok (Windows 10)2022.04.09
@@ -15,30 +15,30 @@ Microsoft Catapult FPGA, PCIE Test Demo, On-board usb Blaster and OpenCL BSP
 
 ## USB Blaster
 
-![](docs/pcitures/catapult_card_usb_blaster.jpg)
-![](docs/pcitures/fpga_programme.jpg)
+![](docs/pictures/catapult_card_usb_blaster.jpg)
+![](docs/pictures/fpga_programme.jpg)
 
 ## Demo
 
 ### PCIE_DDR DMA test
 
-![](docs/pcitures/pcie_dma_test.jpg)
+![](docs/pictures/pcie_dma_test.jpg)
 
 ## OpenCL
 
 ### DEVICE
 
-![](docs/pcitures/catapult_v3_opencl_device.jpg)
+![](docs/pictures/catapult_v3_opencl_device.jpg)
 
 ### Board TEST
 
-![](docs/pcitures/catapult_v3_opencl_diagnose.jpg)
+![](docs/pictures/catapult_v3_opencl_diagnose.jpg)
 
 ### Sobel
 
-![](docs/pcitures/catapult_v3_opencl_sobel_0.jpg)
-![](docs/pcitures/catapult_v3_opencl_sobel_1.jpg)
+![](docs/pictures/catapult_v3_opencl_sobel_0.jpg)
+![](docs/pictures/catapult_v3_opencl_sobel_1.jpg)
 
 ### Mandelbrot
 
-![](docs/pcitures/catapult_v3_opencl_mandelbrot_0.jpg)
+![](docs/pictures/catapult_v3_opencl_mandelbrot_0.jpg)

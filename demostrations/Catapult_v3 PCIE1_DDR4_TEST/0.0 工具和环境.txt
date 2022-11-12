@@ -1,0 +1,21 @@
+
+PCIE DDR4测试：
+1. 连接板卡USB到电脑，安装Microsoft Catapult v3  板载USB Blaster驱动
+2.下载FPGA EPCQL jic配置文件，运行 0.0 FPGA Download.bat，选3
+2. 将板卡插入PCIE，重启系统，Altera PCIE安装驱动
+3. 运行测试程序，运行 0.0 RUN_TEST.bat
+
+速度测试：
+1.安装 vc运行库
+2.运行 AVMM_DMA_Windows_GUI
+
+a).系统
+版本	Windows 10 专业版
+版本号	20H2
+安装日期	‎2022/‎4/‎23
+操作系统内部版本	19042.1645
+体验	Windows Feature Experience Pack 120.2212.4170.0
+
+b). Quartus (Quartus Prime Pro 20.1)
+
+c). Microsoft Visual Studio Community 2022 (64 位) - Current版本 17.1.5

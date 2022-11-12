@@ -1,0 +1,961 @@
+<?xml version="1.0" ?>
+<ipxact:component xmlns:altera="http://www.altera.com/XMLSchema/IPXact2014/extensions" xmlns:ipxact="http://www.accellera.org/XMLSchema/IPXACT/1685-2014">
+  <ipxact:vendor>author</ipxact:vendor>
+  <ipxact:library>board_kernel_clk_gen</ipxact:library>
+  <ipxact:name>kernel_clk_gen</ipxact:name>
+  <ipxact:version>16.1</ipxact:version>
+  <ipxact:busInterfaces>
+    <ipxact:busInterface>
+      <ipxact:name>clk</ipxact:name>
+      <ipxact:busType vendor="altera" library="altera" name="clock" version="18.1"></ipxact:busType>
+      <ipxact:abstractionTypes>
+        <ipxact:abstractionType>
+          <ipxact:abstractionRef vendor="altera" library="altera" name="clock" version="18.1"></ipxact:abstractionRef>
+          <ipxact:portMaps>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>clk</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>clk_clk</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+          </ipxact:portMaps>
+        </ipxact:abstractionType>
+      </ipxact:abstractionTypes>
+      <ipxact:slave></ipxact:slave>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="clockRate" type="longint">
+          <ipxact:name>clockRate</ipxact:name>
+          <ipxact:displayName>Clock rate</ipxact:displayName>
+          <ipxact:value>50000000</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="externallyDriven" type="bit">
+          <ipxact:name>externallyDriven</ipxact:name>
+          <ipxact:displayName>Externally driven</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ptfSchematicName" type="string">
+          <ipxact:name>ptfSchematicName</ipxact:name>
+          <ipxact:displayName>PTF schematic name</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+      <ipxact:vendorExtensions>
+        <altera:altera_assignments>
+          <ipxact:parameters>
+            <ipxact:parameter parameterId="qsys.ui.export_name" type="string">
+              <ipxact:name>qsys.ui.export_name</ipxact:name>
+              <ipxact:value>clk</ipxact:value>
+            </ipxact:parameter>
+          </ipxact:parameters>
+        </altera:altera_assignments>
+      </ipxact:vendorExtensions>
+    </ipxact:busInterface>
+    <ipxact:busInterface>
+      <ipxact:name>reset</ipxact:name>
+      <ipxact:busType vendor="altera" library="altera" name="reset" version="18.1"></ipxact:busType>
+      <ipxact:abstractionTypes>
+        <ipxact:abstractionType>
+          <ipxact:abstractionRef vendor="altera" library="altera" name="reset" version="18.1"></ipxact:abstractionRef>
+          <ipxact:portMaps>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>reset_n</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>reset_reset_n</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+          </ipxact:portMaps>
+        </ipxact:abstractionType>
+      </ipxact:abstractionTypes>
+      <ipxact:slave></ipxact:slave>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="associatedClock" type="string">
+          <ipxact:name>associatedClock</ipxact:name>
+          <ipxact:displayName>Associated clock</ipxact:displayName>
+          <ipxact:value>clk</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="synchronousEdges" type="string">
+          <ipxact:name>synchronousEdges</ipxact:name>
+          <ipxact:displayName>Synchronous edges</ipxact:displayName>
+          <ipxact:value>DEASSERT</ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+      <ipxact:vendorExtensions>
+        <altera:altera_assignments>
+          <ipxact:parameters>
+            <ipxact:parameter parameterId="qsys.ui.export_name" type="string">
+              <ipxact:name>qsys.ui.export_name</ipxact:name>
+              <ipxact:value>reset</ipxact:value>
+            </ipxact:parameter>
+          </ipxact:parameters>
+        </altera:altera_assignments>
+      </ipxact:vendorExtensions>
+    </ipxact:busInterface>
+    <ipxact:busInterface>
+      <ipxact:name>ctrl</ipxact:name>
+      <ipxact:busType vendor="altera" library="altera" name="avalon" version="18.1"></ipxact:busType>
+      <ipxact:abstractionTypes>
+        <ipxact:abstractionType>
+          <ipxact:abstractionRef vendor="altera" library="altera" name="avalon" version="18.1"></ipxact:abstractionRef>
+          <ipxact:portMaps>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>waitrequest</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_waitrequest</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>readdata</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_readdata</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>readdatavalid</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_readdatavalid</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>burstcount</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_burstcount</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>writedata</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_writedata</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>address</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_address</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>write</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_write</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>read</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_read</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>byteenable</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_byteenable</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>debugaccess</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>ctrl_debugaccess</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+          </ipxact:portMaps>
+        </ipxact:abstractionType>
+      </ipxact:abstractionTypes>
+      <ipxact:slave></ipxact:slave>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="addressAlignment" type="string">
+          <ipxact:name>addressAlignment</ipxact:name>
+          <ipxact:displayName>Slave addressing</ipxact:displayName>
+          <ipxact:value>DYNAMIC</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="addressGroup" type="int">
+          <ipxact:name>addressGroup</ipxact:name>
+          <ipxact:displayName>Address group</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="addressSpan" type="string">
+          <ipxact:name>addressSpan</ipxact:name>
+          <ipxact:displayName>Address span</ipxact:displayName>
+          <ipxact:value>4096</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="addressUnits" type="string">
+          <ipxact:name>addressUnits</ipxact:name>
+          <ipxact:displayName>Address units</ipxact:displayName>
+          <ipxact:value>SYMBOLS</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="alwaysBurstMaxBurst" type="bit">
+          <ipxact:name>alwaysBurstMaxBurst</ipxact:name>
+          <ipxact:displayName>Always burst maximum burst</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="associatedClock" type="string">
+          <ipxact:name>associatedClock</ipxact:name>
+          <ipxact:displayName>Associated clock</ipxact:displayName>
+          <ipxact:value>clk</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="associatedReset" type="string">
+          <ipxact:name>associatedReset</ipxact:name>
+          <ipxact:displayName>Associated reset</ipxact:displayName>
+          <ipxact:value>reset</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="bitsPerSymbol" type="int">
+          <ipxact:name>bitsPerSymbol</ipxact:name>
+          <ipxact:displayName>Bits per symbol</ipxact:displayName>
+          <ipxact:value>8</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="bridgedAddressOffset" type="string">
+          <ipxact:name>bridgedAddressOffset</ipxact:name>
+          <ipxact:displayName>Bridged Address Offset</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="bridgesToMaster" type="string">
+          <ipxact:name>bridgesToMaster</ipxact:name>
+          <ipxact:displayName>Bridges to master</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="burstOnBurstBoundariesOnly" type="bit">
+          <ipxact:name>burstOnBurstBoundariesOnly</ipxact:name>
+          <ipxact:displayName>Burst on burst boundaries only</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="burstcountUnits" type="string">
+          <ipxact:name>burstcountUnits</ipxact:name>
+          <ipxact:displayName>Burstcount units</ipxact:displayName>
+          <ipxact:value>WORDS</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="constantBurstBehavior" type="bit">
+          <ipxact:name>constantBurstBehavior</ipxact:name>
+          <ipxact:displayName>Constant burst behavior</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="explicitAddressSpan" type="string">
+          <ipxact:name>explicitAddressSpan</ipxact:name>
+          <ipxact:displayName>Explicit address span</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="holdTime" type="int">
+          <ipxact:name>holdTime</ipxact:name>
+          <ipxact:displayName>Hold</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="interleaveBursts" type="bit">
+          <ipxact:name>interleaveBursts</ipxact:name>
+          <ipxact:displayName>Interleave bursts</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="isBigEndian" type="bit">
+          <ipxact:name>isBigEndian</ipxact:name>
+          <ipxact:displayName>Big endian</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="isFlash" type="bit">
+          <ipxact:name>isFlash</ipxact:name>
+          <ipxact:displayName>Flash memory</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="isMemoryDevice" type="bit">
+          <ipxact:name>isMemoryDevice</ipxact:name>
+          <ipxact:displayName>Memory device</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="isNonVolatileStorage" type="bit">
+          <ipxact:name>isNonVolatileStorage</ipxact:name>
+          <ipxact:displayName>Non-volatile storage</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="linewrapBursts" type="bit">
+          <ipxact:name>linewrapBursts</ipxact:name>
+          <ipxact:displayName>Linewrap bursts</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="maximumPendingReadTransactions" type="int">
+          <ipxact:name>maximumPendingReadTransactions</ipxact:name>
+          <ipxact:displayName>Maximum pending read transactions</ipxact:displayName>
+          <ipxact:value>4</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="maximumPendingWriteTransactions" type="int">
+          <ipxact:name>maximumPendingWriteTransactions</ipxact:name>
+          <ipxact:displayName>Maximum pending write transactions</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="minimumReadLatency" type="int">
+          <ipxact:name>minimumReadLatency</ipxact:name>
+          <ipxact:displayName>minimumReadLatency</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="minimumResponseLatency" type="int">
+          <ipxact:name>minimumResponseLatency</ipxact:name>
+          <ipxact:displayName>Minimum response latency</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="minimumUninterruptedRunLength" type="int">
+          <ipxact:name>minimumUninterruptedRunLength</ipxact:name>
+          <ipxact:displayName>Minimum uninterrupted run length</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prSafe" type="bit">
+          <ipxact:name>prSafe</ipxact:name>
+          <ipxact:displayName>Partial Reconfiguration Safe</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="printableDevice" type="bit">
+          <ipxact:name>printableDevice</ipxact:name>
+          <ipxact:displayName>Can receive stdout/stderr</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="readLatency" type="int">
+          <ipxact:name>readLatency</ipxact:name>
+          <ipxact:displayName>Read latency</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="readWaitStates" type="int">
+          <ipxact:name>readWaitStates</ipxact:name>
+          <ipxact:displayName>Read wait states</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="readWaitTime" type="int">
+          <ipxact:name>readWaitTime</ipxact:name>
+          <ipxact:displayName>Read wait</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="registerIncomingSignals" type="bit">
+          <ipxact:name>registerIncomingSignals</ipxact:name>
+          <ipxact:displayName>Register incoming signals</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="registerOutgoingSignals" type="bit">
+          <ipxact:name>registerOutgoingSignals</ipxact:name>
+          <ipxact:displayName>Register outgoing signals</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="setupTime" type="int">
+          <ipxact:name>setupTime</ipxact:name>
+          <ipxact:displayName>Setup</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="timingUnits" type="string">
+          <ipxact:name>timingUnits</ipxact:name>
+          <ipxact:displayName>Timing units</ipxact:displayName>
+          <ipxact:value>Cycles</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="transparentBridge" type="bit">
+          <ipxact:name>transparentBridge</ipxact:name>
+          <ipxact:displayName>Transparent bridge</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="waitrequestAllowance" type="int">
+          <ipxact:name>waitrequestAllowance</ipxact:name>
+          <ipxact:displayName>Waitrequest allowance</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="wellBehavedWaitrequest" type="bit">
+          <ipxact:name>wellBehavedWaitrequest</ipxact:name>
+          <ipxact:displayName>Well-behaved waitrequest</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="writeLatency" type="int">
+          <ipxact:name>writeLatency</ipxact:name>
+          <ipxact:displayName>Write latency</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="writeWaitStates" type="int">
+          <ipxact:name>writeWaitStates</ipxact:name>
+          <ipxact:displayName>Write wait states</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="writeWaitTime" type="int">
+          <ipxact:name>writeWaitTime</ipxact:name>
+          <ipxact:displayName>Write wait</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+      <ipxact:vendorExtensions>
+        <altera:altera_assignments>
+          <ipxact:parameters>
+            <ipxact:parameter parameterId="embeddedsw.configuration.isFlash" type="string">
+              <ipxact:name>embeddedsw.configuration.isFlash</ipxact:name>
+              <ipxact:value>0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="embeddedsw.configuration.isMemoryDevice" type="string">
+              <ipxact:name>embeddedsw.configuration.isMemoryDevice</ipxact:name>
+              <ipxact:value>0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="embeddedsw.configuration.isNonVolatileStorage" type="string">
+              <ipxact:name>embeddedsw.configuration.isNonVolatileStorage</ipxact:name>
+              <ipxact:value>0</ipxact:value>
+            </ipxact:parameter>
+            <ipxact:parameter parameterId="embeddedsw.configuration.isPrintableDevice" type="string">
+              <ipxact:name>embeddedsw.configuration.isPrintableDevice</ipxact:name>
+              <ipxact:value>0</ipxact:value>
+            </ipxact:parameter>
+          </ipxact:parameters>
+        </altera:altera_assignments>
+      </ipxact:vendorExtensions>
+    </ipxact:busInterface>
+    <ipxact:busInterface>
+      <ipxact:name>kernel_clk</ipxact:name>
+      <ipxact:busType vendor="altera" library="altera" name="clock" version="18.1"></ipxact:busType>
+      <ipxact:abstractionTypes>
+        <ipxact:abstractionType>
+          <ipxact:abstractionRef vendor="altera" library="altera" name="clock" version="18.1"></ipxact:abstractionRef>
+          <ipxact:portMaps>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>clk</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>kernel_clk_clk</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+          </ipxact:portMaps>
+        </ipxact:abstractionType>
+      </ipxact:abstractionTypes>
+      <ipxact:master></ipxact:master>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="associatedDirectClock" type="string">
+          <ipxact:name>associatedDirectClock</ipxact:name>
+          <ipxact:displayName>Associated direct clock</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="clockRate" type="longint">
+          <ipxact:name>clockRate</ipxact:name>
+          <ipxact:displayName>Clock rate</ipxact:displayName>
+          <ipxact:value>400000000</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="clockRateKnown" type="bit">
+          <ipxact:name>clockRateKnown</ipxact:name>
+          <ipxact:displayName>Clock rate known</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="externallyDriven" type="bit">
+          <ipxact:name>externallyDriven</ipxact:name>
+          <ipxact:displayName>Externally driven</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ptfSchematicName" type="string">
+          <ipxact:name>ptfSchematicName</ipxact:name>
+          <ipxact:displayName>PTF schematic name</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+    </ipxact:busInterface>
+    <ipxact:busInterface>
+      <ipxact:name>kernel_clk2x</ipxact:name>
+      <ipxact:busType vendor="altera" library="altera" name="clock" version="18.1"></ipxact:busType>
+      <ipxact:abstractionTypes>
+        <ipxact:abstractionType>
+          <ipxact:abstractionRef vendor="altera" library="altera" name="clock" version="18.1"></ipxact:abstractionRef>
+          <ipxact:portMaps>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>clk</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>kernel_clk2x_clk</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+          </ipxact:portMaps>
+        </ipxact:abstractionType>
+      </ipxact:abstractionTypes>
+      <ipxact:master></ipxact:master>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="associatedDirectClock" type="string">
+          <ipxact:name>associatedDirectClock</ipxact:name>
+          <ipxact:displayName>Associated direct clock</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="clockRate" type="longint">
+          <ipxact:name>clockRate</ipxact:name>
+          <ipxact:displayName>Clock rate</ipxact:displayName>
+          <ipxact:value>800000000</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="clockRateKnown" type="bit">
+          <ipxact:name>clockRateKnown</ipxact:name>
+          <ipxact:displayName>Clock rate known</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="externallyDriven" type="bit">
+          <ipxact:name>externallyDriven</ipxact:name>
+          <ipxact:displayName>Externally driven</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ptfSchematicName" type="string">
+          <ipxact:name>ptfSchematicName</ipxact:name>
+          <ipxact:displayName>PTF schematic name</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+    </ipxact:busInterface>
+    <ipxact:busInterface>
+      <ipxact:name>kernel_pll_refclk</ipxact:name>
+      <ipxact:busType vendor="altera" library="altera" name="clock" version="18.1"></ipxact:busType>
+      <ipxact:abstractionTypes>
+        <ipxact:abstractionType>
+          <ipxact:abstractionRef vendor="altera" library="altera" name="clock" version="18.1"></ipxact:abstractionRef>
+          <ipxact:portMaps>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>clk</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>kernel_pll_refclk_clk</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+          </ipxact:portMaps>
+        </ipxact:abstractionType>
+      </ipxact:abstractionTypes>
+      <ipxact:slave></ipxact:slave>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="clockRate" type="longint">
+          <ipxact:name>clockRate</ipxact:name>
+          <ipxact:displayName>Clock rate</ipxact:displayName>
+          <ipxact:value>100000000</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="externallyDriven" type="bit">
+          <ipxact:name>externallyDriven</ipxact:name>
+          <ipxact:displayName>Externally driven</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="ptfSchematicName" type="string">
+          <ipxact:name>ptfSchematicName</ipxact:name>
+          <ipxact:displayName>PTF schematic name</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+      <ipxact:vendorExtensions>
+        <altera:altera_assignments>
+          <ipxact:parameters>
+            <ipxact:parameter parameterId="ui.blockdiagram.direction" type="string">
+              <ipxact:name>ui.blockdiagram.direction</ipxact:name>
+              <ipxact:value>input</ipxact:value>
+            </ipxact:parameter>
+          </ipxact:parameters>
+        </altera:altera_assignments>
+      </ipxact:vendorExtensions>
+    </ipxact:busInterface>
+    <ipxact:busInterface>
+      <ipxact:name>kernel_pll_locked</ipxact:name>
+      <ipxact:busType vendor="altera" library="altera" name="conduit" version="18.1"></ipxact:busType>
+      <ipxact:abstractionTypes>
+        <ipxact:abstractionType>
+          <ipxact:abstractionRef vendor="altera" library="altera" name="conduit" version="18.1"></ipxact:abstractionRef>
+          <ipxact:portMaps>
+            <ipxact:portMap>
+              <ipxact:logicalPort>
+                <ipxact:name>export</ipxact:name>
+              </ipxact:logicalPort>
+              <ipxact:physicalPort>
+                <ipxact:name>kernel_pll_locked_export</ipxact:name>
+              </ipxact:physicalPort>
+            </ipxact:portMap>
+          </ipxact:portMaps>
+        </ipxact:abstractionType>
+      </ipxact:abstractionTypes>
+      <ipxact:slave></ipxact:slave>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="associatedClock" type="string">
+          <ipxact:name>associatedClock</ipxact:name>
+          <ipxact:displayName>associatedClock</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="associatedReset" type="string">
+          <ipxact:name>associatedReset</ipxact:name>
+          <ipxact:displayName>associatedReset</ipxact:displayName>
+          <ipxact:value></ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="prSafe" type="bit">
+          <ipxact:name>prSafe</ipxact:name>
+          <ipxact:displayName>Partial Reconfiguration Safe</ipxact:displayName>
+          <ipxact:value>false</ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+    </ipxact:busInterface>
+  </ipxact:busInterfaces>
+  <ipxact:model>
+    <ipxact:views>
+      <ipxact:view>
+        <ipxact:name>QUARTUS_SYNTH</ipxact:name>
+        <ipxact:envIdentifier>:quartus.altera.com:</ipxact:envIdentifier>
+        <ipxact:componentInstantiationRef>QUARTUS_SYNTH</ipxact:componentInstantiationRef>
+      </ipxact:view>
+    </ipxact:views>
+    <ipxact:instantiations>
+      <ipxact:componentInstantiation>
+        <ipxact:name>QUARTUS_SYNTH</ipxact:name>
+        <ipxact:moduleName>acl_kernel_clk_a10</ipxact:moduleName>
+        <ipxact:fileSetRef>
+          <ipxact:localName>QUARTUS_SYNTH</ipxact:localName>
+        </ipxact:fileSetRef>
+        <ipxact:parameters></ipxact:parameters>
+      </ipxact:componentInstantiation>
+    </ipxact:instantiations>
+    <ipxact:ports>
+      <ipxact:port>
+        <ipxact:name>clk_clk</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>reset_reset_n</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_waitrequest</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>out</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_readdata</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>out</ipxact:direction>
+          <ipxact:vectors>
+            <ipxact:vector>
+              <ipxact:left>0</ipxact:left>
+              <ipxact:right>31</ipxact:right>
+            </ipxact:vector>
+          </ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC_VECTOR</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_readdatavalid</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>out</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_burstcount</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC_VECTOR</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_writedata</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors>
+            <ipxact:vector>
+              <ipxact:left>0</ipxact:left>
+              <ipxact:right>31</ipxact:right>
+            </ipxact:vector>
+          </ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC_VECTOR</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_address</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors>
+            <ipxact:vector>
+              <ipxact:left>0</ipxact:left>
+              <ipxact:right>11</ipxact:right>
+            </ipxact:vector>
+          </ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC_VECTOR</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_write</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_read</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_byteenable</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors>
+            <ipxact:vector>
+              <ipxact:left>0</ipxact:left>
+              <ipxact:right>3</ipxact:right>
+            </ipxact:vector>
+          </ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC_VECTOR</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>ctrl_debugaccess</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>kernel_clk_clk</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>out</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>kernel_clk2x_clk</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>out</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>kernel_pll_refclk_clk</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>in</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+      <ipxact:port>
+        <ipxact:name>kernel_pll_locked_export</ipxact:name>
+        <ipxact:wire>
+          <ipxact:direction>out</ipxact:direction>
+          <ipxact:vectors></ipxact:vectors>
+          <ipxact:wireTypeDefs>
+            <ipxact:wireTypeDef>
+              <ipxact:typeName>STD_LOGIC</ipxact:typeName>
+              <ipxact:viewRef>QUARTUS_SYNTH</ipxact:viewRef>
+            </ipxact:wireTypeDef>
+          </ipxact:wireTypeDefs>
+        </ipxact:wire>
+      </ipxact:port>
+    </ipxact:ports>
+  </ipxact:model>
+  <ipxact:vendorExtensions>
+    <altera:entity_info>
+      <ipxact:vendor>author</ipxact:vendor>
+      <ipxact:library>board_kernel_clk_gen</ipxact:library>
+      <ipxact:name>acl_kernel_clk_a10</ipxact:name>
+      <ipxact:version>16.1</ipxact:version>
+    </altera:entity_info>
+    <altera:altera_module_parameters>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="REF_CLK_RATE" type="real">
+          <ipxact:name>REF_CLK_RATE</ipxact:name>
+          <ipxact:displayName>REF_CLK_RATE</ipxact:displayName>
+          <ipxact:value>100.0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="KERNEL_TARGET_CLOCK_RATE" type="real">
+          <ipxact:name>KERNEL_TARGET_CLOCK_RATE</ipxact:name>
+          <ipxact:displayName>KERNEL_TARGET_CLOCK_RATE</ipxact:displayName>
+          <ipxact:value>400.0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="AUTO_DEVICE_FAMILY" type="string">
+          <ipxact:name>AUTO_DEVICE_FAMILY</ipxact:name>
+          <ipxact:displayName>Auto DEVICE_FAMILY</ipxact:displayName>
+          <ipxact:value>Arria 10</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="AUTO_DEVICE" type="string">
+          <ipxact:name>AUTO_DEVICE</ipxact:name>
+          <ipxact:displayName>Auto DEVICE</ipxact:displayName>
+          <ipxact:value>10AXF40AA</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="AUTO_DEVICE_SPEEDGRADE" type="string">
+          <ipxact:name>AUTO_DEVICE_SPEEDGRADE</ipxact:name>
+          <ipxact:displayName>Auto DEVICE_SPEEDGRADE</ipxact:displayName>
+          <ipxact:value>2</ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+    </altera:altera_module_parameters>
+    <altera:altera_system_parameters>
+      <ipxact:parameters>
+        <ipxact:parameter parameterId="device" type="string">
+          <ipxact:name>device</ipxact:name>
+          <ipxact:displayName>Device</ipxact:displayName>
+          <ipxact:value>10AXF40AA</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="deviceFamily" type="string">
+          <ipxact:name>deviceFamily</ipxact:name>
+          <ipxact:displayName>Device family</ipxact:displayName>
+          <ipxact:value>Arria 10</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="deviceSpeedGrade" type="string">
+          <ipxact:name>deviceSpeedGrade</ipxact:name>
+          <ipxact:displayName>Device Speed Grade</ipxact:displayName>
+          <ipxact:value>1</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="generationId" type="int">
+          <ipxact:name>generationId</ipxact:name>
+          <ipxact:displayName>Generation Id</ipxact:displayName>
+          <ipxact:value>0</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="bonusData" type="string">
+          <ipxact:name>bonusData</ipxact:name>
+          <ipxact:displayName>bonusData</ipxact:displayName>
+          <ipxact:value>bonusData &#xd;&#xa;{&#xd;&#xa;   element $system&#xd;&#xa;   {&#xd;&#xa;      datum _originalDeviceFamily&#xd;&#xa;      {&#xd;&#xa;         value = "Arria 10";&#xd;&#xa;         type = "String";&#xd;&#xa;      }&#xd;&#xa;   }&#xd;&#xa;   element kernel_clk_gen&#xd;&#xa;   {&#xd;&#xa;   }&#xd;&#xa;}&#xd;&#xa;</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="hideFromIPCatalog" type="bit">
+          <ipxact:name>hideFromIPCatalog</ipxact:name>
+          <ipxact:displayName>Hide from IP Catalog</ipxact:displayName>
+          <ipxact:value>true</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="lockedInterfaceDefinition" type="string">
+          <ipxact:name>lockedInterfaceDefinition</ipxact:name>
+          <ipxact:displayName>lockedInterfaceDefinition</ipxact:displayName>
+          <ipxact:value>&lt;boundaryDefinition&gt;&#xa;    &lt;interfaces&gt;&#xa;        &lt;interface&gt;&#xa;            &lt;name&gt;clk&lt;/name&gt;&#xa;            &lt;type&gt;clock&lt;/type&gt;&#xa;            &lt;isStart&gt;false&lt;/isStart&gt;&#xa;            &lt;ports&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;clk_clk&lt;/name&gt;&#xa;                    &lt;role&gt;clk&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;            &lt;/ports&gt;&#xa;            &lt;assignments&gt;&#xa;                &lt;assignmentValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;qsys.ui.export_name&lt;/key&gt;&#xa;                        &lt;value&gt;clk&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/assignmentValueMap&gt;&#xa;            &lt;/assignments&gt;&#xa;            &lt;parameters&gt;&#xa;                &lt;parameterValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;clockRate&lt;/key&gt;&#xa;                        &lt;value&gt;50000000&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;externallyDriven&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;ptfSchematicName&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/parameterValueMap&gt;&#xa;            &lt;/parameters&gt;&#xa;        &lt;/interface&gt;&#xa;        &lt;interface&gt;&#xa;            &lt;name&gt;reset&lt;/name&gt;&#xa;            &lt;type&gt;reset&lt;/type&gt;&#xa;            &lt;isStart&gt;false&lt;/isStart&gt;&#xa;            &lt;ports&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;reset_reset_n&lt;/name&gt;&#xa;                    &lt;role&gt;reset_n&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;            &lt;/ports&gt;&#xa;            &lt;assignments&gt;&#xa;                &lt;assignmentValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;qsys.ui.export_name&lt;/key&gt;&#xa;                        &lt;value&gt;reset&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/assignmentValueMap&gt;&#xa;            &lt;/assignments&gt;&#xa;            &lt;parameters&gt;&#xa;                &lt;parameterValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;associatedClock&lt;/key&gt;&#xa;                        &lt;value&gt;clk&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;synchronousEdges&lt;/key&gt;&#xa;                        &lt;value&gt;DEASSERT&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/parameterValueMap&gt;&#xa;            &lt;/parameters&gt;&#xa;        &lt;/interface&gt;&#xa;        &lt;interface&gt;&#xa;            &lt;name&gt;ctrl&lt;/name&gt;&#xa;            &lt;type&gt;avalon&lt;/type&gt;&#xa;            &lt;isStart&gt;false&lt;/isStart&gt;&#xa;            &lt;ports&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_waitrequest&lt;/name&gt;&#xa;                    &lt;role&gt;waitrequest&lt;/role&gt;&#xa;                    &lt;direction&gt;Output&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_readdata&lt;/name&gt;&#xa;                    &lt;role&gt;readdata&lt;/role&gt;&#xa;                    &lt;direction&gt;Output&lt;/direction&gt;&#xa;                    &lt;width&gt;32&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_readdatavalid&lt;/name&gt;&#xa;                    &lt;role&gt;readdatavalid&lt;/role&gt;&#xa;                    &lt;direction&gt;Output&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_burstcount&lt;/name&gt;&#xa;                    &lt;role&gt;burstcount&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_writedata&lt;/name&gt;&#xa;                    &lt;role&gt;writedata&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;32&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_address&lt;/name&gt;&#xa;                    &lt;role&gt;address&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;12&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_write&lt;/name&gt;&#xa;                    &lt;role&gt;write&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_read&lt;/name&gt;&#xa;                    &lt;role&gt;read&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_byteenable&lt;/name&gt;&#xa;                    &lt;role&gt;byteenable&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;4&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC_VECTOR&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;ctrl_debugaccess&lt;/name&gt;&#xa;                    &lt;role&gt;debugaccess&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;            &lt;/ports&gt;&#xa;            &lt;assignments&gt;&#xa;                &lt;assignmentValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;embeddedsw.configuration.isFlash&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;embeddedsw.configuration.isMemoryDevice&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;embeddedsw.configuration.isNonVolatileStorage&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;embeddedsw.configuration.isPrintableDevice&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/assignmentValueMap&gt;&#xa;            &lt;/assignments&gt;&#xa;            &lt;parameters&gt;&#xa;                &lt;parameterValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;addressAlignment&lt;/key&gt;&#xa;                        &lt;value&gt;DYNAMIC&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;addressGroup&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;addressSpan&lt;/key&gt;&#xa;                        &lt;value&gt;4096&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;addressUnits&lt;/key&gt;&#xa;                        &lt;value&gt;SYMBOLS&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;alwaysBurstMaxBurst&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;associatedClock&lt;/key&gt;&#xa;                        &lt;value&gt;clk&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;associatedReset&lt;/key&gt;&#xa;                        &lt;value&gt;reset&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;bitsPerSymbol&lt;/key&gt;&#xa;                        &lt;value&gt;8&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;bridgedAddressOffset&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;bridgesToMaster&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;burstOnBurstBoundariesOnly&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;burstcountUnits&lt;/key&gt;&#xa;                        &lt;value&gt;WORDS&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;constantBurstBehavior&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;explicitAddressSpan&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;holdTime&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;interleaveBursts&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;isBigEndian&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;isFlash&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;isMemoryDevice&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;isNonVolatileStorage&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;linewrapBursts&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;maximumPendingReadTransactions&lt;/key&gt;&#xa;                        &lt;value&gt;4&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;maximumPendingWriteTransactions&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;minimumReadLatency&lt;/key&gt;&#xa;                        &lt;value&gt;1&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;minimumResponseLatency&lt;/key&gt;&#xa;                        &lt;value&gt;1&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;minimumUninterruptedRunLength&lt;/key&gt;&#xa;                        &lt;value&gt;1&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;prSafe&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;printableDevice&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;readLatency&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;readWaitStates&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;readWaitTime&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;registerIncomingSignals&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;registerOutgoingSignals&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;setupTime&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;timingUnits&lt;/key&gt;&#xa;                        &lt;value&gt;Cycles&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;transparentBridge&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;waitrequestAllowance&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;wellBehavedWaitrequest&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;writeLatency&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;writeWaitStates&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;writeWaitTime&lt;/key&gt;&#xa;                        &lt;value&gt;0&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/parameterValueMap&gt;&#xa;            &lt;/parameters&gt;&#xa;        &lt;/interface&gt;&#xa;        &lt;interface&gt;&#xa;            &lt;name&gt;kernel_clk&lt;/name&gt;&#xa;            &lt;type&gt;clock&lt;/type&gt;&#xa;            &lt;isStart&gt;true&lt;/isStart&gt;&#xa;            &lt;ports&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;kernel_clk_clk&lt;/name&gt;&#xa;                    &lt;role&gt;clk&lt;/role&gt;&#xa;                    &lt;direction&gt;Output&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;            &lt;/ports&gt;&#xa;            &lt;assignments&gt;&#xa;                &lt;assignmentValueMap/&gt;&#xa;            &lt;/assignments&gt;&#xa;            &lt;parameters&gt;&#xa;                &lt;parameterValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;associatedDirectClock&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;clockRate&lt;/key&gt;&#xa;                        &lt;value&gt;400000000&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;clockRateKnown&lt;/key&gt;&#xa;                        &lt;value&gt;true&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;externallyDriven&lt;/key&gt;&#xa;                        &lt;value&gt;true&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;ptfSchematicName&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/parameterValueMap&gt;&#xa;            &lt;/parameters&gt;&#xa;        &lt;/interface&gt;&#xa;        &lt;interface&gt;&#xa;            &lt;name&gt;kernel_clk2x&lt;/name&gt;&#xa;            &lt;type&gt;clock&lt;/type&gt;&#xa;            &lt;isStart&gt;true&lt;/isStart&gt;&#xa;            &lt;ports&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;kernel_clk2x_clk&lt;/name&gt;&#xa;                    &lt;role&gt;clk&lt;/role&gt;&#xa;                    &lt;direction&gt;Output&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;            &lt;/ports&gt;&#xa;            &lt;assignments&gt;&#xa;                &lt;assignmentValueMap/&gt;&#xa;            &lt;/assignments&gt;&#xa;            &lt;parameters&gt;&#xa;                &lt;parameterValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;associatedDirectClock&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;clockRate&lt;/key&gt;&#xa;                        &lt;value&gt;800000000&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;clockRateKnown&lt;/key&gt;&#xa;                        &lt;value&gt;true&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;externallyDriven&lt;/key&gt;&#xa;                        &lt;value&gt;true&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;ptfSchematicName&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/parameterValueMap&gt;&#xa;            &lt;/parameters&gt;&#xa;        &lt;/interface&gt;&#xa;        &lt;interface&gt;&#xa;            &lt;name&gt;kernel_pll_refclk&lt;/name&gt;&#xa;            &lt;type&gt;clock&lt;/type&gt;&#xa;            &lt;isStart&gt;false&lt;/isStart&gt;&#xa;            &lt;ports&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;kernel_pll_refclk_clk&lt;/name&gt;&#xa;                    &lt;role&gt;clk&lt;/role&gt;&#xa;                    &lt;direction&gt;Input&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;            &lt;/ports&gt;&#xa;            &lt;assignments&gt;&#xa;                &lt;assignmentValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;ui.blockdiagram.direction&lt;/key&gt;&#xa;                        &lt;value&gt;input&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/assignmentValueMap&gt;&#xa;            &lt;/assignments&gt;&#xa;            &lt;parameters&gt;&#xa;                &lt;parameterValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;clockRate&lt;/key&gt;&#xa;                        &lt;value&gt;100000000&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;externallyDriven&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;ptfSchematicName&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/parameterValueMap&gt;&#xa;            &lt;/parameters&gt;&#xa;        &lt;/interface&gt;&#xa;        &lt;interface&gt;&#xa;            &lt;name&gt;kernel_pll_locked&lt;/name&gt;&#xa;            &lt;type&gt;conduit&lt;/type&gt;&#xa;            &lt;isStart&gt;false&lt;/isStart&gt;&#xa;            &lt;ports&gt;&#xa;                &lt;port&gt;&#xa;                    &lt;name&gt;kernel_pll_locked_export&lt;/name&gt;&#xa;                    &lt;role&gt;export&lt;/role&gt;&#xa;                    &lt;direction&gt;Output&lt;/direction&gt;&#xa;                    &lt;width&gt;1&lt;/width&gt;&#xa;                    &lt;lowerBound&gt;0&lt;/lowerBound&gt;&#xa;                    &lt;vhdlType&gt;STD_LOGIC&lt;/vhdlType&gt;&#xa;                &lt;/port&gt;&#xa;            &lt;/ports&gt;&#xa;            &lt;assignments&gt;&#xa;                &lt;assignmentValueMap/&gt;&#xa;            &lt;/assignments&gt;&#xa;            &lt;parameters&gt;&#xa;                &lt;parameterValueMap&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;associatedClock&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;associatedReset&lt;/key&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;prSafe&lt;/key&gt;&#xa;                        &lt;value&gt;false&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/parameterValueMap&gt;&#xa;            &lt;/parameters&gt;&#xa;        &lt;/interface&gt;&#xa;    &lt;/interfaces&gt;&#xa;&lt;/boundaryDefinition&gt;</ipxact:value>
+        </ipxact:parameter>
+        <ipxact:parameter parameterId="systemInfos" type="string">
+          <ipxact:name>systemInfos</ipxact:name>
+          <ipxact:displayName>systemInfos</ipxact:displayName>
+          <ipxact:value>&lt;systemInfosDefinition&gt;&#xa;    &lt;connPtSystemInfos&gt;&#xa;        &lt;entry&gt;&#xa;            &lt;key&gt;ctrl&lt;/key&gt;&#xa;            &lt;value&gt;&#xa;                &lt;connectionPointName&gt;ctrl&lt;/connectionPointName&gt;&#xa;                &lt;suppliedSystemInfos/&gt;&#xa;                &lt;consumedSystemInfos&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;ADDRESS_MAP&lt;/key&gt;&#xa;                        &lt;value&gt;&amp;lt;address-map&amp;gt;&amp;lt;slave name='ctrl' start='0x0' end='0x1000' datawidth='32' /&amp;gt;&amp;lt;/address-map&amp;gt;&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;ADDRESS_WIDTH&lt;/key&gt;&#xa;                        &lt;value&gt;12&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;MAX_SLAVE_DATA_WIDTH&lt;/key&gt;&#xa;                        &lt;value&gt;32&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/consumedSystemInfos&gt;&#xa;            &lt;/value&gt;&#xa;        &lt;/entry&gt;&#xa;        &lt;entry&gt;&#xa;            &lt;key&gt;kernel_clk&lt;/key&gt;&#xa;            &lt;value&gt;&#xa;                &lt;connectionPointName&gt;kernel_clk&lt;/connectionPointName&gt;&#xa;                &lt;suppliedSystemInfos/&gt;&#xa;                &lt;consumedSystemInfos&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;CLOCK_RATE&lt;/key&gt;&#xa;                        &lt;value&gt;400000000&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/consumedSystemInfos&gt;&#xa;            &lt;/value&gt;&#xa;        &lt;/entry&gt;&#xa;        &lt;entry&gt;&#xa;            &lt;key&gt;kernel_clk2x&lt;/key&gt;&#xa;            &lt;value&gt;&#xa;                &lt;connectionPointName&gt;kernel_clk2x&lt;/connectionPointName&gt;&#xa;                &lt;suppliedSystemInfos/&gt;&#xa;                &lt;consumedSystemInfos&gt;&#xa;                    &lt;entry&gt;&#xa;                        &lt;key&gt;CLOCK_RATE&lt;/key&gt;&#xa;                        &lt;value&gt;800000000&lt;/value&gt;&#xa;                    &lt;/entry&gt;&#xa;                &lt;/consumedSystemInfos&gt;&#xa;            &lt;/value&gt;&#xa;        &lt;/entry&gt;&#xa;    &lt;/connPtSystemInfos&gt;&#xa;&lt;/systemInfosDefinition&gt;</ipxact:value>
+        </ipxact:parameter>
+      </ipxact:parameters>
+    </altera:altera_system_parameters>
+    <altera:altera_interface_boundary>
+      <altera:interface_mapping altera:name="clk" altera:internal="kernel_clk_gen.clk" altera:type="clock" altera:dir="end">
+        <altera:port_mapping altera:name="clk_clk" altera:internal="clk_clk"></altera:port_mapping>
+      </altera:interface_mapping>
+      <altera:interface_mapping altera:name="ctrl" altera:internal="kernel_clk_gen.ctrl" altera:type="avalon" altera:dir="end">
+        <altera:port_mapping altera:name="ctrl_address" altera:internal="ctrl_address"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_burstcount" altera:internal="ctrl_burstcount"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_byteenable" altera:internal="ctrl_byteenable"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_debugaccess" altera:internal="ctrl_debugaccess"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_read" altera:internal="ctrl_read"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_readdata" altera:internal="ctrl_readdata"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_readdatavalid" altera:internal="ctrl_readdatavalid"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_waitrequest" altera:internal="ctrl_waitrequest"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_write" altera:internal="ctrl_write"></altera:port_mapping>
+        <altera:port_mapping altera:name="ctrl_writedata" altera:internal="ctrl_writedata"></altera:port_mapping>
+      </altera:interface_mapping>
+      <altera:interface_mapping altera:name="kernel_clk" altera:internal="kernel_clk_gen.kernel_clk" altera:type="clock" altera:dir="start">
+        <altera:port_mapping altera:name="kernel_clk_clk" altera:internal="kernel_clk_clk"></altera:port_mapping>
+      </altera:interface_mapping>
+      <altera:interface_mapping altera:name="kernel_clk2x" altera:internal="kernel_clk_gen.kernel_clk2x" altera:type="clock" altera:dir="start">
+        <altera:port_mapping altera:name="kernel_clk2x_clk" altera:internal="kernel_clk2x_clk"></altera:port_mapping>
+      </altera:interface_mapping>
+      <altera:interface_mapping altera:name="kernel_pll_locked" altera:internal="kernel_clk_gen.kernel_pll_locked" altera:type="conduit" altera:dir="end">
+        <altera:port_mapping altera:name="kernel_pll_locked_export" altera:internal="kernel_pll_locked_export"></altera:port_mapping>
+      </altera:interface_mapping>
+      <altera:interface_mapping altera:name="kernel_pll_refclk" altera:internal="kernel_clk_gen.kernel_pll_refclk" altera:type="clock" altera:dir="end">
+        <altera:port_mapping altera:name="kernel_pll_refclk_clk" altera:internal="kernel_pll_refclk_clk"></altera:port_mapping>
+      </altera:interface_mapping>
+      <altera:interface_mapping altera:name="reset" altera:internal="kernel_clk_gen.reset" altera:type="reset" altera:dir="end">
+        <altera:port_mapping altera:name="reset_reset_n" altera:internal="reset_reset_n"></altera:port_mapping>
+      </altera:interface_mapping>
+    </altera:altera_interface_boundary>
+    <altera:altera_has_warnings>true</altera:altera_has_warnings>
+    <altera:altera_has_errors>false</altera:altera_has_errors>
+  </ipxact:vendorExtensions>
+</ipxact:component>

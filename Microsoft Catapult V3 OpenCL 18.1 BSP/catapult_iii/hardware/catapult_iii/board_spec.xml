@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<board version="18.1" name="catapult_iii">
+
+  <compile name="top" project="top" revision="top" qsys_file="none" generic_kernel="1">
+    <generate cmd="quartus_sh -t scripts/pre_flow_pr.tcl"/>
+    <synthesize cmd="quartus_cdb -t import_compile.tcl"/>
+    <auto_migrate platform_type="a10_ref" >
+      <include fixes=""/>
+      <exclude fixes=""/>
+    </auto_migrate>
+  </compile>
+
+  <compile name="base" project="top" revision="base" qsys_file="none" generic_kernel="1">
+    <generate cmd="quartus_sh -t scripts/pre_flow_pr.tcl base"/>
+    <synthesize cmd="quartus_sh --flow compile top -c base"/>
+    <auto_migrate platform_type="a10_ref" >
+      <include fixes=""/>
+      <exclude fixes="pre_skipbak,post_skipbak"/>
+    </auto_migrate>
+  </compile>
+
+  <compile name="flat" project="top" revision="flat" qsys_file="none" generic_kernel="1">
+    <generate cmd="quartus_sh -t scripts/pre_flow_pr.tcl flat"/>
+    <synthesize cmd="quartus_sh --flow compile top -c flat"/>
+    <auto_migrate platform_type="a10_ref" >
+      <include fixes=""/>
+      <exclude fixes="pre_skipbak,post_skipbak"/>
+    </auto_migrate>
+  </compile>
+
+  <compile name="regenerate_cache" project="top" revision="top" qsys_file="none" generic_kernel="1">
+    <generate cmd="quartus_sh -t scripts/pre_flow_pr.tcl"/>
+    <synthesize cmd="quartus_sh -t scripts/regenerate_cache.tcl a10_ref catapult_iii"/>
+    <auto_migrate platform_type="a10_ref" >
+      <include fixes=""/>
+      <exclude fixes="pre_skipbak"/>
+    </auto_migrate>
+  </compile>
+
+  <device device_model="10ax115s2f45i1sg_dm.xml">
+    <used_resources>
+      <alms num="32770"/> <!-- (Total ALMs) - (ALMs available to kernel_system_inst) -->
+      <ffs num="131080"/>
+      <dsps num="0"/>
+      <rams num="176"/>
+    </used_resources>
+  </device>
+
+  <!-- DDR4-2400 -->
+  <global_mem name="DDR" max_bandwidth="34128" interleaved_bytes="1024" config_addr="0x018">
+    <interface name="board" port="kernel_mem0" type="slave" width="512" maxburst="16" address="0x000000000"  size="0x100000000" latency="240"/>
+    <interface name="board" port="kernel_mem1" type="slave" width="512" maxburst="16" address="0x100000000"  size="0x100000000" latency="240"/>
+  </global_mem>
+
+  <host>
+    <kernel_config start="0x00000000" size="0x0100000"/>
+  </host>
+
+  <interfaces>
+    <interface name="board" port="kernel_cra" type="master" width="64" misc="0"/>
+    <interface name="board" port="kernel_irq" type="irq" width="1"/>
+    <interface name="board" port="acl_internal_snoop" type="streamsource" enable="SNOOPENABLE" width="32" clock="board.kernel_clk"/>
+    <kernel_clk_reset clk="board.kernel_clk" clk2x="board.kernel_clk2x" reset="board.kernel_reset"/>
+  </interfaces>
+
+</board>

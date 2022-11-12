@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<board_env version="18.1" name="catapult_iii">
+  <hardware dir="hardware" default="catapult_iii"></hardware>
+  <platform name="linux64">
+    <mmdlib>%b/linux64/lib/libmicrosoft_catapult_v3_mmd.so</mmdlib>
+    <linkflags>-L%b/linux64/lib</linkflags>
+    <linklibs>-lmicrosoft_catapult_v3_mmd</linklibs>
+    <utilbindir>%b/linux64/libexec</utilbindir>
+  </platform>
+
+  <platform name="windows64">
+    <mmdlib>%b/windows64/bin/microsoft_catapult_v3_mmd.dll</mmdlib>
+    <linkflags>/libpath:%b/windows64/lib</linkflags>
+    <linklibs>microsoft_catapult_v3_mmd.lib</linklibs>
+    <utilbindir>%b/windows64/libexec</utilbindir>
+  </platform>
+</board_env>

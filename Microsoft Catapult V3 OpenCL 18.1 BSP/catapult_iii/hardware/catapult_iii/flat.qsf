@@ -1,0 +1,531 @@
+# (C) 1992-2019 Intel Corporation.                            
+# Intel, the Intel logo, Intel, MegaCore, NIOS II, Quartus and TalkBack words    
+# and logos are trademarks of Intel Corporation or its subsidiaries in the U.S.  
+# and/or other countries. Other marks and brands may be claimed as the property  
+# of others. See Trademarks on intel.com for full list of Intel trademarks or    
+# the Trademarks & Brands Names Database (if Intel) or See www.Intel.com/legal (if Altera) 
+# Your use of Intel Corporation's design tools, logic functions and other        
+# software and tools, and its AMPP partner logic functions, and any output       
+# files any of the foregoing (including device programming or simulation         
+# files), and any associated documentation or information are expressly subject  
+# to the terms and conditions of the Altera Program License Subscription         
+# Agreement, Intel MegaCore Function License Agreement, or other applicable      
+# license agreement, including, without limitation, that your use is for the     
+# sole purpose of programming logic devices manufactured by Intel and sold by    
+# Intel or its authorized distributors.  Please refer to the applicable          
+# agreement for further details.                                                 
+
+
+# device.tcl contains settings unique to each device type/board variant (most importantly, the device string for the particular device type)
+source device.tcl
+
+#============================================================
+# Files and basic settings
+#============================================================
+set_global_assignment -name TOP_LEVEL_ENTITY top
+
+set_global_assignment -name SDC_FILE top.sdc
+
+# opencl_bsp_ip.qsf contains all necessary Verilog and IP files including 
+# top.v, ip/freeze_wrapper.v and kernel_mem IP that are used for all revision compiles.
+# Flat and base revision compiles generate board.qsys and append the resulting .ip files 
+# to opencl_bsp_ip.qsf, while top revision compiles imports a post-fit netlist of board.qsys 
+# from the base revision compile and does not require the sources.
+source opencl_bsp_ip.qsf
+
+# Post IP SDC constraints
+set_global_assignment -name SDC_FILE top_post.sdc
+
+# Execute the pre/post CAD flow
+set_global_assignment -name POST_FLOW_SCRIPT_FILE "quartus_cdb:scripts/post_flow_pr.tcl"
+
+# Enable QHD 
+set_global_assignment -name QHD_MODE ON
+
+# ACDS Version ROM MIF
+set_global_assignment -name MIF_FILE acds_version_rom.mif
+
+#============================================================
+# Revision Specific Settings
+#============================================================
+set_global_assignment -name AUTO_GLOBAL_CLOCK OFF
+set_global_assignment -name AUTO_GLOBAL_REGISTER_CONTROLS OFF
+
+# Clocks
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to config_clk
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to board_inst|config_clk~pad
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to board_inst|pll_ref_clk~pad
+set_instance_assignment -name GLOBAL_SIGNAL          OFF -to board_inst|mem|ddr4|ddr4a|ddr4_ddr4a|arch|arch_inst|oct_inst|cal_oct.manual_oct_cal.r_clkdiv
+set_instance_assignment -name GLOBAL_SIGNAL          OFF -to board_inst|mem|ddr4|ddr4b|ddr4_ddr4b|arch|arch_inst|oct_inst|cal_oct.manual_oct_cal.r_clkdiv
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to board_inst|kernel_clk_gen|kernel_clk_gen|kernel_pll|altera_iopll_i|twentynm_pll|outclk[0]
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to board_inst|kernel_clk_gen|kernel_clk_gen|kernel_pll|altera_iopll_i|twentynm_pll|outclk[1]
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to *ALTERA_INSERTED_OSCILLATOR_FOR_IOPLL*
+
+# Resets
+set_instance_assignment -name GLOBAL_SIGNAL GLOBAL_CLOCK -to freeze_wrapper_inst|kernel_system_clock_reset_reset_reset_n
+
+# This setting indicates that the global signal will be frozen high during PR by user logic (implemented in the freeze_wrapper)
+set_instance_assignment -name PR_ALLOW_GLOBAL_LIMS ON -to freeze_wrapper_inst|kernel_system_clock_reset_reset_reset_n
+
+#============================================================
+# Synthesis and Fitter Fine-Tuning
+#============================================================
+set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
+set_global_assignment -name FIT_ONLY_ONE_ATTEMPT ON
+set_global_assignment -name PLACEMENT_EFFORT_MULTIPLIER 4.0
+set_global_assignment -name ROUTER_TIMING_OPTIMIZATION_LEVEL MAXIMUM
+set_global_assignment -name OPTIMIZE_HOLD_TIMING "ALL PATHS"
+set_global_assignment -name OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name ALLOW_SHIFT_REGISTER_MERGING_ACROSS_HIERARCHIES OFF
+set_global_assignment -name DISABLE_REGISTER_MERGING_ACROSS_HIERARCHIES ON
+set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Pro Edition"
+set_instance_assignment -name AUTO_SHIFT_REGISTER_RECOGNITION OFF -to board_inst|*pipe_stage_*
+set_global_assignment -name ENABLE_PR_PINS OFF
+set_global_assignment -name ENABLE_INIT_DONE_OUTPUT OFF
+
+#============================================================
+# End of original settings
+#============================================================
+
+#============================================================
+# Board settings
+#============================================================
+
+#############################################################
+# Misc
+#############################################################
+# Programming file generation
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
+
+# Power model
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+
+# I/O Configuration
+set_global_assignment -name ACTIVE_SERIAL_CLOCK FREQ_100MHZ
+
+#############################################################
+# Pinouts
+#############################################################
+## Clocks
+set_location_assignment PIN_AP20 -to config_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to config_clk
+#use pcie2 clock as kernel_pll_refclk
+set_location_assignment PIN_AE29 -to kernel_pll_refclk
+set_location_assignment PIN_AE28 -to "kernel_pll_refclk(n)"
+set_instance_assignment -name IO_STANDARD LVDS -to kernel_pll_refclk
+set_instance_assignment -name INPUT_TERMINATION DIFFERENTIAL -to kernel_pll_refclk
+
+## PCIe
+set_location_assignment PIN_AN29 -to pcie_refclk
+#set_location_assignment PIN_AL38 -to "pcie_refclk(n)"
+set_instance_assignment -name IO_STANDARD HCSL -to pcie_refclk
+set_instance_assignment -name XCVR_IO_PIN_TERMINATION 100_OHMS -to pcie_refclk
+
+set_location_assignment PIN_AW16 -to perstl0_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to perstl0_n
+
+set_location_assignment PIN_AN33 -to hip_serial_rx_in[0]
+set_instance_assignment -name IO_STANDARD CML -to hip_serial_rx_in[0]
+set_instance_assignment -name XCVR_IO_PIN_TERMINATION 100_OHMS -to hip_serial_rx_in[0]
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_rx_in[0]
+set_instance_assignment -name XCVR_A10_RX_TERM_SEL R_R1 -to hip_serial_rx_in[0]
+set_instance_assignment -name XCVR_A10_RX_ONE_STAGE_ENABLE NON_S1_MODE -to hip_serial_rx_in[0]
+set_instance_assignment -name XCVR_A10_RX_ADP_CTLE_ACGAIN_4S RADP_CTLE_ACGAIN_4S_7 -to hip_serial_rx_in[0]
+set_instance_assignment -name XCVR_A10_RX_ADP_VGA_SEL RADP_VGA_SEL_4 -to hip_serial_rx_in[0]
+
+set_location_assignment PIN_AM31 -to hip_serial_rx_in[1]
+set_instance_assignment -name IO_STANDARD CML -to hip_serial_rx_in[1]
+set_instance_assignment -name XCVR_IO_PIN_TERMINATION 100_OHMS -to hip_serial_rx_in[1]
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_rx_in[1]
+set_instance_assignment -name XCVR_A10_RX_TERM_SEL R_R1 -to hip_serial_rx_in[1]
+set_instance_assignment -name XCVR_A10_RX_ONE_STAGE_ENABLE NON_S1_MODE -to hip_serial_rx_in[1]
+set_instance_assignment -name XCVR_A10_RX_ADP_CTLE_ACGAIN_4S RADP_CTLE_ACGAIN_4S_7 -to hip_serial_rx_in[1]
+set_instance_assignment -name XCVR_A10_RX_ADP_VGA_SEL RADP_VGA_SEL_4 -to hip_serial_rx_in[1]
+
+set_location_assignment PIN_AM35 -to hip_serial_rx_in[2]
+set_instance_assignment -name IO_STANDARD CML -to hip_serial_rx_in[2]
+set_instance_assignment -name XCVR_IO_PIN_TERMINATION 100_OHMS -to hip_serial_rx_in[2]
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_rx_in[2]
+set_instance_assignment -name XCVR_A10_RX_TERM_SEL R_R1 -to hip_serial_rx_in[2]
+set_instance_assignment -name XCVR_A10_RX_ONE_STAGE_ENABLE NON_S1_MODE -to hip_serial_rx_in[2]
+set_instance_assignment -name XCVR_A10_RX_ADP_CTLE_ACGAIN_4S RADP_CTLE_ACGAIN_4S_7 -to hip_serial_rx_in[2]
+set_instance_assignment -name XCVR_A10_RX_ADP_VGA_SEL RADP_VGA_SEL_4 -to hip_serial_rx_in[2]
+
+set_location_assignment PIN_AL33 -to hip_serial_rx_in[3]
+set_instance_assignment -name IO_STANDARD CML -to hip_serial_rx_in[3]
+set_instance_assignment -name XCVR_IO_PIN_TERMINATION 100_OHMS -to hip_serial_rx_in[3]
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_rx_in[3]
+set_instance_assignment -name XCVR_A10_RX_TERM_SEL R_R1 -to hip_serial_rx_in[3]
+set_instance_assignment -name XCVR_A10_RX_ONE_STAGE_ENABLE NON_S1_MODE -to hip_serial_rx_in[3]
+set_instance_assignment -name XCVR_A10_RX_ADP_CTLE_ACGAIN_4S RADP_CTLE_ACGAIN_4S_7 -to hip_serial_rx_in[3]
+set_instance_assignment -name XCVR_A10_RX_ADP_VGA_SEL RADP_VGA_SEL_4 -to hip_serial_rx_in[3]
+
+
+set_location_assignment PIN_AU37 -to hip_serial_tx_out[0]
+set_instance_assignment -name IO_STANDARD "HSSI DIFFERENTIAL I/O" -to hip_serial_tx_out[0]
+set_location_assignment PIN_AT35 -to hip_serial_tx_out[1]
+set_instance_assignment -name IO_STANDARD "HSSI DIFFERENTIAL I/O" -to hip_serial_tx_out[1]
+set_location_assignment PIN_AT39 -to hip_serial_tx_out[2]
+set_instance_assignment -name IO_STANDARD "HSSI DIFFERENTIAL I/O" -to hip_serial_tx_out[2]
+set_location_assignment PIN_AR37 -to hip_serial_tx_out[3]
+set_instance_assignment -name IO_STANDARD "HSSI DIFFERENTIAL I/O" -to hip_serial_tx_out[3]
+
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_tx_out[0]
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_tx_out[1]
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_tx_out[2]
+set_instance_assignment -name XCVR_VCCR_VCCT_VOLTAGE 1_0V -to hip_serial_tx_out[3]
+
+
+## LEDs
+set_location_assignment PIN_AM17 -to leds[0]
+set_location_assignment PIN_AH18 -to leds[1]
+set_location_assignment PIN_AJ18 -to leds[2]
+set_location_assignment PIN_AH17 -to leds[3]
+set_location_assignment PIN_AJ16 -to leds[4]
+set_location_assignment PIN_AK17 -to leds[5]
+set_location_assignment PIN_AK16 -to leds[6]
+set_location_assignment PIN_AK18 -to leds[7]
+set_location_assignment PIN_AL18 -to leds[8]
+
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to leds[8]
+
+## DDR4A
+## Bottom DDR use CLK Y3
+set_location_assignment PIN_AG5 -to pll_ref_clk
+set_location_assignment PIN_AH7 -to mem0_oct_rzqin
+set_location_assignment PIN_AH2 -to mem0_par
+set_location_assignment PIN_Y3  -to mem0_alert_n
+set_location_assignment PIN_AF5 -to mem0_ba[0]
+set_location_assignment PIN_AH4 -to mem0_ba[1]
+set_location_assignment PIN_AG4 -to mem0_bg[0]
+set_location_assignment PIN_AM1 -to mem0_cke[0]
+set_location_assignment PIN_AK1 -to mem0_ck[0]
+set_location_assignment PIN_AK2 -to mem0_ck_n[0]
+set_location_assignment PIN_AM2 -to mem0_cs_n[0]
+set_location_assignment PIN_AN2 -to mem0_reset_n[0]
+set_location_assignment PIN_AR1 -to mem0_odt[0]
+set_location_assignment PIN_AL2 -to mem0_act_n[0]
+
+set_location_assignment PIN_AN3 -to mem0_a[0]
+set_location_assignment PIN_AM4 -to mem0_a[1]
+set_location_assignment PIN_AL3 -to mem0_a[2]
+set_location_assignment PIN_AL4 -to mem0_a[3]
+set_location_assignment PIN_AL5 -to mem0_a[4]
+set_location_assignment PIN_AK5 -to mem0_a[5]
+set_location_assignment PIN_AK6 -to mem0_a[6]
+set_location_assignment PIN_AJ6 -to mem0_a[7]
+set_location_assignment PIN_AK3 -to mem0_a[8]
+set_location_assignment PIN_AJ4 -to mem0_a[9]
+set_location_assignment PIN_AJ5 -to mem0_a[10]
+set_location_assignment PIN_AH6 -to mem0_a[11]
+set_location_assignment PIN_AG7 -to mem0_a[12]
+set_location_assignment PIN_AJ3 -to mem0_a[13]
+set_location_assignment PIN_AH3 -to mem0_a[14]
+set_location_assignment PIN_AF7 -to mem0_a[15]
+set_location_assignment PIN_AE7 -to mem0_a[16]
+
+set_location_assignment PIN_AB4 -to mem0_dbi_n[0]
+set_location_assignment PIN_AB6 -to mem0_dbi_n[1]
+set_location_assignment PIN_AA10 -to mem0_dbi_n[2]
+set_location_assignment PIN_AF10 -to mem0_dbi_n[3]
+set_location_assignment PIN_AH8 -to mem0_dbi_n[4]
+set_location_assignment PIN_AL9 -to mem0_dbi_n[5]
+set_location_assignment PIN_AP3 -to mem0_dbi_n[6]
+set_location_assignment PIN_AU6 -to mem0_dbi_n[7]
+#set_location_assignment PIN_AC2 -to mem0_dbi_n[8]
+
+#Group0
+set_location_assignment PIN_AB1 -to mem0_dq[0]
+set_location_assignment PIN_AA4 -to mem0_dq[1]
+set_location_assignment PIN_AB2 -to mem0_dq[2]
+set_location_assignment PIN_Y1 -to mem0_dq[3]
+set_location_assignment PIN_AC3 -to mem0_dq[4]
+set_location_assignment PIN_Y2 -to mem0_dq[5]
+set_location_assignment PIN_AC4 -to mem0_dq[6]
+set_location_assignment PIN_W1 -to mem0_dq[7]
+
+set_location_assignment PIN_AA2 -to mem0_dqs[0]
+set_location_assignment PIN_AA3 -to mem0_dqs_n[0]
+
+#Group1
+set_location_assignment PIN_AD6 -to mem0_dq[8]
+set_location_assignment PIN_Y7 -to mem0_dq[9]
+set_location_assignment PIN_AD5 -to mem0_dq[10]
+set_location_assignment PIN_Y6 -to mem0_dq[11]
+set_location_assignment PIN_AC6 -to mem0_dq[12]
+set_location_assignment PIN_AA5 -to mem0_dq[13]
+set_location_assignment PIN_AD4 -to mem0_dq[14]
+set_location_assignment PIN_Y5 -to mem0_dq[15]
+
+set_location_assignment PIN_AE5 -to mem0_dqs[1]
+set_location_assignment PIN_AE6 -to mem0_dqs_n[1]
+
+#Group 2
+
+set_location_assignment PIN_AB9 -to mem0_dq[16]
+set_location_assignment PIN_Y10 -to mem0_dq[17]
+set_location_assignment PIN_AA9 -to mem0_dq[18]
+set_location_assignment PIN_Y8 -to mem0_dq[19]
+set_location_assignment PIN_AB11 -to mem0_dq[20]
+set_location_assignment PIN_W8 -to mem0_dq[21]
+set_location_assignment PIN_AB10 -to mem0_dq[22]
+set_location_assignment PIN_AB7 -to mem0_dq[23]
+
+set_location_assignment PIN_AA7 -to mem0_dqs[2]
+set_location_assignment PIN_AA8 -to mem0_dqs_n[2]
+
+#Group 3
+set_location_assignment PIN_AE10 -to mem0_dq[24]
+set_location_assignment PIN_AD9 -to mem0_dq[25]
+set_location_assignment PIN_AE11 -to mem0_dq[26]
+set_location_assignment PIN_AC9 -to mem0_dq[27]
+set_location_assignment PIN_AD8 -to mem0_dq[28]
+set_location_assignment PIN_AC8 -to mem0_dq[29]
+set_location_assignment PIN_AD10 -to mem0_dq[30]
+set_location_assignment PIN_AC11 -to mem0_dq[31]
+
+set_location_assignment PIN_AF8 -to mem0_dqs[3]
+set_location_assignment PIN_AE8 -to mem0_dqs_n[3]
+
+#Group 4
+set_location_assignment PIN_AH11 -to mem0_dq[32]
+set_location_assignment PIN_AJ8 -to mem0_dq[33]
+set_location_assignment PIN_AJ11 -to mem0_dq[34]
+set_location_assignment PIN_AJ9 -to mem0_dq[35]
+set_location_assignment PIN_AF12 -to mem0_dq[36]
+set_location_assignment PIN_AH9 -to mem0_dq[37]
+set_location_assignment PIN_AG12 -to mem0_dq[38]
+set_location_assignment PIN_AG11 -to mem0_dq[39]
+
+set_location_assignment PIN_AG9 -to mem0_dqs[4]
+set_location_assignment PIN_AG10 -to mem0_dqs_n[4]
+
+#Group 5
+set_location_assignment PIN_AK10 -to mem0_dq[40]
+set_location_assignment PIN_AM6 -to mem0_dq[41]
+set_location_assignment PIN_AK8 -to mem0_dq[42]
+set_location_assignment PIN_AN6 -to mem0_dq[43]
+set_location_assignment PIN_AL8 -to mem0_dq[44]
+set_location_assignment PIN_AL7 -to mem0_dq[45]
+set_location_assignment PIN_AM9 -to mem0_dq[46]
+set_location_assignment PIN_AK7 -to mem0_dq[47]
+
+set_location_assignment PIN_AN7 -to mem0_dqs[5]
+set_location_assignment PIN_AM7 -to mem0_dqs_n[5]
+
+#Group 6
+set_location_assignment PIN_AU1 -to mem0_dq[48]
+set_location_assignment PIN_AR3 -to mem0_dq[49]
+set_location_assignment PIN_AT2 -to mem0_dq[50]
+set_location_assignment PIN_AP4 -to mem0_dq[51]
+set_location_assignment PIN_AU2 -to mem0_dq[52]
+set_location_assignment PIN_AN4 -to mem0_dq[53]
+set_location_assignment PIN_AT3 -to mem0_dq[54]
+set_location_assignment PIN_AP5 -to mem0_dq[55]
+
+set_location_assignment PIN_AR5 -to mem0_dqs[6]
+set_location_assignment PIN_AP6 -to mem0_dqs_n[6]
+
+#Group 7
+
+set_location_assignment PIN_AU5 -to mem0_dq[56]
+set_location_assignment PIN_AU4 -to mem0_dq[57]
+set_location_assignment PIN_AR7 -to mem0_dq[58]
+set_location_assignment PIN_AT4 -to mem0_dq[59]
+set_location_assignment PIN_AV4 -to mem0_dq[60]
+set_location_assignment PIN_AR6 -to mem0_dq[61]
+set_location_assignment PIN_AW5 -to mem0_dq[62]
+set_location_assignment PIN_AW4 -to mem0_dq[63]
+
+set_location_assignment PIN_AW6 -to mem0_dqs[7]
+set_location_assignment PIN_AV6 -to mem0_dqs_n[7]
+
+#Group 8 ECC 
+#set_location_assignment PIN_AF3 -to mem0_dq[71]
+#set_location_assignment PIN_AG2 -to mem0_dq[70]
+#set_location_assignment PIN_AE3 -to mem0_dq[69]
+#set_location_assignment PIN_AD1 -to mem0_dq[68]
+#set_location_assignment PIN_AE2 -to mem0_dq[67]
+#set_location_assignment PIN_AF2 -to mem0_dq[66]
+#set_location_assignment PIN_AD3 -to mem0_dq[65]
+#set_location_assignment PIN_AE1 -to mem0_dq[64]
+#
+#set_location_assignment PIN_AH1 -to mem0_dqs[8]
+#set_location_assignment PIN_AG1 -to mem0_dqs_n[8]
+
+## DDR4B
+#set_location_assignment PIN_J3 -to pll_ref_clk0
+#set_location_assignment PIN_K3 -to "pll_ref_clk0(n)"
+set_location_assignment PIN_L2 -to mem1_oct_rzqin
+set_location_assignment PIN_P10 -to mem1_par
+set_location_assignment PIN_E5 -to mem1_alert_n
+set_location_assignment PIN_J1 -to mem1_ba[0]
+set_location_assignment PIN_J4 -to mem1_ba[1]
+set_location_assignment PIN_J5 -to mem1_bg[0]
+set_location_assignment PIN_P9 -to mem1_cke[0]
+set_location_assignment PIN_N8 -to mem1_ck[0]
+set_location_assignment PIN_M9 -to mem1_ck_n[0]
+set_location_assignment PIN_P11 -to mem1_cs_n[0]
+set_location_assignment PIN_L9 -to mem1_reset_n[0]
+set_location_assignment PIN_P8 -to mem1_odt[0]
+set_location_assignment PIN_R11 -to mem1_act_n[0]
+
+set_location_assignment PIN_L5 -to mem1_a[0]
+set_location_assignment PIN_M5 -to mem1_a[1]
+set_location_assignment PIN_L4 -to mem1_a[2]
+set_location_assignment PIN_M4 -to mem1_a[3]
+set_location_assignment PIN_M6 -to mem1_a[4]
+set_location_assignment PIN_M7 -to mem1_a[5]
+set_location_assignment PIN_K7 -to mem1_a[6]
+set_location_assignment PIN_L7 -to mem1_a[7]
+set_location_assignment PIN_K5 -to mem1_a[8]
+set_location_assignment PIN_K6 -to mem1_a[9]
+set_location_assignment PIN_N6 -to mem1_a[10]
+set_location_assignment PIN_N7 -to mem1_a[11]
+set_location_assignment PIN_L3 -to mem1_a[12]
+set_location_assignment PIN_K1 -to mem1_a[13]
+set_location_assignment PIN_K2 -to mem1_a[14]
+set_location_assignment PIN_H3 -to mem1_a[15]
+set_location_assignment PIN_H4 -to mem1_a[16]
+
+
+set_location_assignment PIN_E6 -to mem1_dbi_n[0]
+set_location_assignment PIN_C8 -to mem1_dbi_n[1]
+set_location_assignment PIN_E2 -to mem1_dbi_n[2]
+set_location_assignment PIN_J8 -to mem1_dbi_n[3]
+set_location_assignment PIN_J10 -to mem1_dbi_n[4]
+set_location_assignment PIN_M1 -to mem1_dbi_n[5]
+set_location_assignment PIN_V7 -to mem1_dbi_n[6]
+set_location_assignment PIN_T4 -to mem1_dbi_n[7]
+#set_location_assignment PIN_V11 -to mem1_dbi_n[8]
+
+#Group0
+set_location_assignment PIN_F5 -to mem1_dq[0]
+set_location_assignment PIN_C4 -to mem1_dq[1]
+set_location_assignment PIN_C3 -to mem1_dq[2]
+set_location_assignment PIN_D3 -to mem1_dq[3]
+set_location_assignment PIN_C2 -to mem1_dq[4]
+set_location_assignment PIN_F7 -to mem1_dq[5]
+set_location_assignment PIN_E7 -to mem1_dq[6]
+set_location_assignment PIN_D6 -to mem1_dq[7]
+
+set_location_assignment PIN_D4 -to mem1_dqs[0]
+set_location_assignment PIN_D5 -to mem1_dqs_n[0]
+
+
+#Group1
+set_location_assignment PIN_C7 -to mem1_dq[8]
+set_location_assignment PIN_D8 -to mem1_dq[9]
+set_location_assignment PIN_B7 -to mem1_dq[10]
+set_location_assignment PIN_B5 -to mem1_dq[11]
+set_location_assignment PIN_F8 -to mem1_dq[12]
+set_location_assignment PIN_B4 -to mem1_dq[13]
+set_location_assignment PIN_A5 -to mem1_dq[14]
+set_location_assignment PIN_E8 -to mem1_dq[15]
+
+set_location_assignment PIN_B6 -to mem1_dqs[1]
+set_location_assignment PIN_C6 -to mem1_dqs_n[1]
+
+#Group 2
+set_location_assignment PIN_D1 -to mem1_dq[16]
+set_location_assignment PIN_G1 -to mem1_dq[17]
+set_location_assignment PIN_C1 -to mem1_dq[18]
+set_location_assignment PIN_G2 -to mem1_dq[19]
+set_location_assignment PIN_E1 -to mem1_dq[20]
+set_location_assignment PIN_F4 -to mem1_dq[21]
+set_location_assignment PIN_F2 -to mem1_dq[22]
+set_location_assignment PIN_H2 -to mem1_dq[23]
+
+set_location_assignment PIN_E3 -to mem1_dqs[2]
+set_location_assignment PIN_F3 -to mem1_dqs_n[2]
+
+#Group 3
+set_location_assignment PIN_K8 -to mem1_dq[24]
+set_location_assignment PIN_G7 -to mem1_dq[25]
+set_location_assignment PIN_G9 -to mem1_dq[26]
+set_location_assignment PIN_J6 -to mem1_dq[27]
+set_location_assignment PIN_H8 -to mem1_dq[28]
+set_location_assignment PIN_F9 -to mem1_dq[29]
+set_location_assignment PIN_H7 -to mem1_dq[30]
+set_location_assignment PIN_H6 -to mem1_dq[31]
+
+set_location_assignment PIN_G5 -to mem1_dqs[3]
+set_location_assignment PIN_G6 -to mem1_dqs_n[3]
+
+#Group 4
+set_location_assignment PIN_J9 -to mem1_dq[32]
+set_location_assignment PIN_K11 -to mem1_dq[33]
+set_location_assignment PIN_J11 -to mem1_dq[34]
+set_location_assignment PIN_N13 -to mem1_dq[35]
+set_location_assignment PIN_M12 -to mem1_dq[36]
+set_location_assignment PIN_K10 -to mem1_dq[37]
+set_location_assignment PIN_N12 -to mem1_dq[38]
+set_location_assignment PIN_M11 -to mem1_dq[39]
+
+set_location_assignment PIN_M10 -to mem1_dqs[4]
+set_location_assignment PIN_N11 -to mem1_dqs_n[4]
+
+#Group 5
+set_location_assignment PIN_P4 -to mem1_dq[40]
+set_location_assignment PIN_P1 -to mem1_dq[41]
+set_location_assignment PIN_N3 -to mem1_dq[42]
+set_location_assignment PIN_R3 -to mem1_dq[43]
+set_location_assignment PIN_N4 -to mem1_dq[44]
+set_location_assignment PIN_R2 -to mem1_dq[45]
+set_location_assignment PIN_M2 -to mem1_dq[46]
+set_location_assignment PIN_R1 -to mem1_dq[47]
+
+set_location_assignment PIN_N1 -to mem1_dqs[5]
+set_location_assignment PIN_N2 -to mem1_dqs_n[5]
+
+#Group 6
+set_location_assignment PIN_R5 -to mem1_dq[48]
+set_location_assignment PIN_U7 -to mem1_dq[49]
+set_location_assignment PIN_T5 -to mem1_dq[50]
+set_location_assignment PIN_T7 -to mem1_dq[51]
+set_location_assignment PIN_P5 -to mem1_dq[52]
+set_location_assignment PIN_W6 -to mem1_dq[53]
+set_location_assignment PIN_P6 -to mem1_dq[54]
+set_location_assignment PIN_W5 -to mem1_dq[55]
+
+set_location_assignment PIN_U5 -to mem1_dqs[6]
+set_location_assignment PIN_U6 -to mem1_dqs_n[6]
+
+#Group 7
+set_location_assignment PIN_U4 -to mem1_dq[56]
+set_location_assignment PIN_W4 -to mem1_dq[57]
+set_location_assignment PIN_T2 -to mem1_dq[58]
+set_location_assignment PIN_V4 -to mem1_dq[59]
+set_location_assignment PIN_U2 -to mem1_dq[60]
+set_location_assignment PIN_U1 -to mem1_dq[61]
+set_location_assignment PIN_T3 -to mem1_dq[62]
+set_location_assignment PIN_W3 -to mem1_dq[63]
+
+set_location_assignment PIN_V1 -to mem1_dqs[7]
+set_location_assignment PIN_V2 -to mem1_dqs_n[7]
+
+#Group 8 ECC
+#set_location_assignment PIN_R7 -to mem1_dq[64]
+#set_location_assignment PIN_V8 -to mem1_dq[65]
+#set_location_assignment PIN_T8 -to mem1_dq[66]
+#set_location_assignment PIN_U9 -to mem1_dq[67]
+#set_location_assignment PIN_T9 -to mem1_dq[68]
+#set_location_assignment PIN_V9 -to mem1_dq[69]
+#set_location_assignment PIN_U11 -to mem1_dq[70]
+#set_location_assignment PIN_R6 -to mem1_dq[71]
+#
+#set_location_assignment PIN_W9 -to mem1_dqs[8]
+#set_location_assignment PIN_W10 -to mem1_dqs_n[8]
+
+
+
+

@@ -1,0 +1,36 @@
+# (C) 1992-2019 Intel Corporation.                            
+# Intel, the Intel logo, Intel, MegaCore, NIOS II, Quartus and TalkBack words    
+# and logos are trademarks of Intel Corporation or its subsidiaries in the U.S.  
+# and/or other countries. Other marks and brands may be claimed as the property  
+# of others. See Trademarks on intel.com for full list of Intel trademarks or    
+# the Trademarks & Brands Names Database (if Intel) or See www.Intel.com/legal (if Altera) 
+# Your use of Intel Corporation's design tools, logic functions and other        
+# software and tools, and its AMPP partner logic functions, and any output       
+# files any of the foregoing (including device programming or simulation         
+# files), and any associated documentation or information are expressly subject  
+# to the terms and conditions of the Altera Program License Subscription         
+# Agreement, Intel MegaCore Function License Agreement, or other applicable      
+# license agreement, including, without limitation, that your use is for the     
+# sole purpose of programming logic devices manufactured by Intel and sold by    
+# Intel or its authorized distributors.  Please refer to the applicable          
+# agreement for further details.                                                 
+
+
+source flat.qsf
+
+set_global_assignment -name TOP_LEVEL_ENTITY top 
+
+set_global_assignment -name ENABLE_PR_PINS OFF
+set_global_assignment -name ENABLE_INIT_DONE_OUTPUT OFF
+
+set_global_assignment -name REVISION_TYPE PR_IMPL
+set_instance_assignment -name ENTITY_REBINDING pr_region -to  freeze_wrapper_inst|pr_region_inst
+
+# base revision compile SDC constraints only
+set_global_assignment -name SDC_FILE base.sdc
+set_global_assignment -disable -name SDC_FILE top.sdc 
+set_global_assignment -disable -name SDC_FILE top_post.sdc 
+
+set_instance_assignment -name QDB_FILE_PARTITION root_partition.qdb -to "|"
+
+set_instance_assignment -name GENERATE_PR_RBF_FILE ON

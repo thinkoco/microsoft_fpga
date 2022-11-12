@@ -1,0 +1,31 @@
+# (C) 1992-2019 Intel Corporation.                            
+# Intel, the Intel logo, Intel, MegaCore, NIOS II, Quartus and TalkBack words    
+# and logos are trademarks of Intel Corporation or its subsidiaries in the U.S.  
+# and/or other countries. Other marks and brands may be claimed as the property  
+# of others. See Trademarks on intel.com for full list of Intel trademarks or    
+# the Trademarks & Brands Names Database (if Intel) or See www.Intel.com/legal (if Altera) 
+# Your use of Intel Corporation's design tools, logic functions and other        
+# software and tools, and its AMPP partner logic functions, and any output       
+# files any of the foregoing (including device programming or simulation         
+# files), and any associated documentation or information are expressly subject  
+# to the terms and conditions of the Altera Program License Subscription         
+# Agreement, Intel MegaCore Function License Agreement, or other applicable      
+# license agreement, including, without limitation, that your use is for the     
+# sole purpose of programming logic devices manufactured by Intel and sold by    
+# Intel or its authorized distributors.  Please refer to the applicable          
+# agreement for further details.                                                 
+
+
+# device.tcl contains settings unique to each device type/board variant (most importantly, the device string for the particular device type)
+source device.tcl
+
+#============================================================
+# Files and basic settings
+#============================================================
+set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
+set_global_assignment -name VERILOG_FILE top.v
+set_global_assignment -name VERILOG_FILE ip/freeze_wrapper.v
+set_global_assignment -name VERILOG_FILE ip/pr_region.v
+set_global_assignment -name QIP_FILE ip/kernel_mem/kernel_mem_mm_bridge_0/kernel_mem_mm_bridge_0.qip
+set_global_assignment -name LAST_QUARTUS_VERSION "18.1.2 Pro Edition"
